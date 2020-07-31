@@ -53,8 +53,8 @@ public class Course {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "learning_plan_courses",
-	joinColumns = @JoinColumn(name = "planId", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "courseId", referencedColumnName = "id"))
+	joinColumns = @JoinColumn(name = "courseId", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "planId", referencedColumnName = "id"))
 	public Set<LearningPlan> getPlan() {
 		return plan;
 	}

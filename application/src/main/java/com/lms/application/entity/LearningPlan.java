@@ -11,14 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class LearningPlan {
 	
 	private Long id;
 	private LocalDate dateAdded;
-	@JsonIgnoreProperties("user")
+	@JsonIgnore
 	private User user;
 	private Set<Course> courses;
 	
