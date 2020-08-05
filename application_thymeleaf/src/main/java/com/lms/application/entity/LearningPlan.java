@@ -39,7 +39,7 @@ public class LearningPlan {
 	public void setDateAdded(LocalDate dateAdded) {
 		this.dateAdded = dateAdded;
 	}
-
+	
 	@OneToOne
 	@JoinColumn(name = "userId")
 	public User getUser() {

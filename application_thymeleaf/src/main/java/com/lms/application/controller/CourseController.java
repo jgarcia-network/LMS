@@ -17,7 +17,7 @@ import com.lms.application.service.CourseService;
 
 @Controller
 @RequestMapping("/courses")
-public class CourseController {		
+public class CourseController {
 	
 		@Autowired
 		private CourseService service;
@@ -28,19 +28,24 @@ public class CourseController {
 //		}
 		
 		@RequestMapping(method=RequestMethod.GET)
-		public String form(Model model) {
+		public String showCourses(Model model) {
 			model.addAttribute("course", service.getCourses());
-	        return "CourseView";
-			//return "redirect:/courses/CourseView";
+			return "courses";
+		}	
+		
+		@RequestMapping(value="/create", method=RequestMethod.GET)
+		public String showForm(Model model) {
+			model.addAttribute("course", new Course());
+			return "createcourse";
 		}
 		
-		@RequestMapping(value="/submit", method=RequestMethod.POST)		
+		@RequestMapping(value="/create", method=RequestMethod.POST)
 		//public ResponseEntity<Object> createCourse(@ModelAttribute("course") Course course){
 		public String createCourse(RedirectAttributes redirectAttributes, @ModelAttribute("course") Course course){
 			//return new ResponseEntity<Object>(service.createCourse(course), HttpStatus.CREATED);
 		    service.createCourse(course);
 		    redirectAttributes.addFlashAttribute("success", "Course: " + "\"" + course.getTitle() + "\"" + " created");
-		    return "redirect:/courses/submit";
+		    return "redirect:/courses/createcourse";
 		}
 
 		@RequestMapping(value="/{id}", method=RequestMethod.PUT)

@@ -2,6 +2,8 @@ package com.lms.application.service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,34 +23,36 @@ import com.lms.application.util.CourseStatus;
 public class LearningPlanService {
 
 	private static final Logger logger = LogManager.getLogger(LearningPlanService.class);
-	
+
 	@Autowired
 	private LearningPlanRepository repo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private CourseRepository courseRepo;
-	
-	public Iterable<LearningPlan> getPlan(){
+
+	public Iterable<LearningPlan> getPlan() {
 		return repo.findAll();
 	}
-	
-	public LearningPlan submitNewLearningPlan(Set <Long> courseIds, Long userId) throws Exception {
-		try {
-			User currentUser = userRepo.findById(userId).orElse(null);
-			if(currentUser != null) {
+
+	public LearningPlan getUserPlan(Long userId) {
+		LearningPlan lp = repo.findByUserId(userId);
+		return lp == null ? new LearningPlan() : lp;
+	}
+
+	public LearningPlan submitNewLearningPlan(Set<Long> courseIds, Long userId) {
+
+		User currentUser = userRepo.findById(userId).orElse(null);
+		if (currentUser != null) {
 			LearningPlan currentPlan = createPlan(courseIds, currentUser);
 			return currentPlan;
-			}
-			return null;
-		} catch (Exception e) {
-			logger.error("Exception occurred while trying to create plan: " + userId, e);
-			throw e;
 		}
+		return null;
+
 	}
-	
+
 	private LearningPlan setInProgress(Set<Long> courseIds, User user) {
 		LearningPlan plan = new LearningPlan();
 		Course course = new Course();
@@ -59,26 +63,26 @@ public class LearningPlanService {
 		addCourseToPlan(plan);
 		return plan;
 	}
-	
+
 	private LearningPlan setCompleted(Set<Long> courseIds, User user) {
 		LearningPlan plan = new LearningPlan();
 		Course course = new Course();
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
 		plan.setDateAdded(LocalDate.now());
-		plan.setUser(user);		
+		plan.setUser(user);
 		course.setStatus(CourseStatus.COMPLETED);
 		addCourseToPlan(plan);
 		return plan;
 	}
-	
+
 	private void addCourseToPlan(LearningPlan plan) {
 		Set<Course> courses = plan.getCourses();
 		for (Course course : courses) {
 			course.getPlan().add(plan);
 		}
 	}
-	
-	private LearningPlan createPlan(Set <Long> courseIds, User user) {
+
+	private LearningPlan createPlan(Set<Long> courseIds, User user) {
 		LearningPlan plan = new LearningPlan();
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
 		plan.setDateAdded(LocalDate.now());
@@ -90,13 +94,14 @@ public class LearningPlanService {
 		plan = repo.save(plan);
 		return plan;
 	}
-	
-	private Set<Course> convertToCourseSet(Iterable<Course> iterable){
+
+	private Set<Course> convertToCourseSet(Iterable<Course> iterable) {
 		Set<Course> set = new HashSet<Course>();
 		for (Course course : iterable) {
 			set.add(course);
 		}
 		return set;
+		
 	}
-	
+
 }
