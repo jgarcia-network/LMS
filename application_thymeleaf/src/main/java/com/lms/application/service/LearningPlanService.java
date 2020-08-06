@@ -2,8 +2,6 @@ package com.lms.application.service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.lms.application.entity.Course;
 import com.lms.application.entity.LearningPlan;
-import com.lms.application.entity.User;
+import com.lms.application.entity.ApplicationUser;
 import com.lms.application.repository.CourseRepository;
 import com.lms.application.repository.LearningPlanRepository;
 import com.lms.application.repository.UserRepository;
@@ -44,7 +42,7 @@ public class LearningPlanService {
 
 	public LearningPlan submitNewLearningPlan(Set<Long> courseIds, Long userId) {
 
-		User currentUser = userRepo.findById(userId).orElse(null);
+		ApplicationUser currentUser = userRepo.findById(userId).orElse(null);
 		if (currentUser != null) {
 			LearningPlan currentPlan = createPlan(courseIds, currentUser);
 			return currentPlan;
@@ -53,7 +51,7 @@ public class LearningPlanService {
 
 	}
 
-	private LearningPlan setInProgress(Set<Long> courseIds, User user) {
+	private LearningPlan setInProgress(Set<Long> courseIds, ApplicationUser user) {
 		LearningPlan plan = new LearningPlan();
 		Course course = new Course();
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
@@ -64,7 +62,7 @@ public class LearningPlanService {
 		return plan;
 	}
 
-	private LearningPlan setCompleted(Set<Long> courseIds, User user) {
+	private LearningPlan setCompleted(Set<Long> courseIds, ApplicationUser user) {
 		LearningPlan plan = new LearningPlan();
 		Course course = new Course();
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
@@ -82,7 +80,7 @@ public class LearningPlanService {
 		}
 	}
 
-	private LearningPlan createPlan(Set<Long> courseIds, User user) {
+	private LearningPlan createPlan(Set<Long> courseIds, ApplicationUser user) {
 		LearningPlan plan = new LearningPlan();
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
 		plan.setDateAdded(LocalDate.now());

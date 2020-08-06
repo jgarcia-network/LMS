@@ -7,10 +7,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lms.application.entity.Credentials;
-import com.lms.application.entity.User;
+import com.lms.application.entity.ApplicationUser;
 import com.lms.application.repository.UserRepository;
 
 
@@ -21,29 +22,36 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	private static final Logger logger = LogManager.getLogger(UserService.class);
 	
 //	public User createUser(User user) {
 //			return repo.save(user);
 //	}
 	
-	public User register(User user) throws AuthenticationException {
+	public ApplicationUser getByUserName(String username) {
+		return repo.findByUsername(username);
+	}
+	
+	public ApplicationUser register(ApplicationUser user) throws AuthenticationException {
 		user.setEmail(user.getEmail());
 		user.setFirstName(user.getFirstName());
 		user.setLastName(user.getLastName());
 		user.setUsername(user.getUsername());
-		user.setHash(BCrypt.hashpw(user.getHash(), BCrypt.gensalt()));		
+		user.setHash(bCryptPasswordEncoder.encode(user.getHash()));
+		//user.setHash(BCrypt.hashpw(user.getHash(), BCrypt.gensalt()));
 		try {
 			repo.save(user);
 			return user;
 		} catch (DataIntegrityViolationException e) {
-			//Need to fix this - username is not checked for dup
 			throw new AuthenticationException("Username taken.");
 		}
 	}
 
-	public User login(Credentials cred) throws AuthenticationException {
-		User foundUser = repo.findByUsername(cred.getUsername());
+	public ApplicationUser login(Credentials cred) throws AuthenticationException {
+		ApplicationUser foundUser = repo.findByUsername(cred.getUsername());
 		if (foundUser != null && BCrypt.checkpw(cred.getPassword(), foundUser.getHash())) {
 			cred.setUserId(foundUser.getId());
 			return foundUser;

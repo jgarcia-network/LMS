@@ -19,7 +19,7 @@ public class LearningPlan {
 	private Long id;
 	private LocalDate dateAdded;
 	@JsonIgnore
-	private User user;
+	private ApplicationUser user;
 	private Set<Course> courses;
 	
 	@Id
@@ -42,11 +42,11 @@ public class LearningPlan {
 	
 	@OneToOne
 	@JoinColumn(name = "userId")
-	public User getUser() {
+	public ApplicationUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(ApplicationUser user) {
 		this.user = user;
 	}
 	

@@ -44,7 +44,7 @@
 <!--   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav ml-auto aria-current">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Admin</a>
+      <a class="text-dark bg-light nav-link"><span data-feather="star"></span>Admin</a>
     </li>
     <li class="nav-item text-nowrap">
       <a class="nav-link" th:href="@{/logout}">Sign out</a>
@@ -58,7 +58,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="LearningPlanView.html#">
+            <a class="nav-link" aria-current="page" th:href="@{/users/{id}/plan(id=${id})}">
               <span data-feather="home"></span>
               Home
             </a>
@@ -135,7 +135,6 @@
         <h2 class="h2">Courses</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
           </div>
         </div>
       </div>

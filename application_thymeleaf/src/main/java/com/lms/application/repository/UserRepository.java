@@ -2,10 +2,10 @@ package com.lms.application.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.lms.application.entity.User;
+import com.lms.application.entity.ApplicationUser;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<ApplicationUser, Long> {
 	
-	public User findByUsername(String username);
+	public ApplicationUser findByUsername(String username);
 	
 }

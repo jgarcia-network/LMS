@@ -29,26 +29,19 @@
     </div>
 	<div class="fadeIn second"><h3>Learning Management System</h3></div>
     <!-- Login Form -->
-<!--     <div class="alert alert-danger margin mt-3" th:text="${cred}"></div> -->
     <form class="form-signin" th:object="${cred}" th:action="@{/login}" method="post">
     <div class="alert alert-success margin mt-3" role="alert" th:text="${success}" th:if="${success}"></div>
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="username" th:field="${cred.username}">
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" th:field="${cred.password}">
-<!--       <input id="submitbutton" type="submit" class="fadeIn fourth btn btn-secondary" value="Log In"> -->
       <button id="submitbutton" class= "btn btn-dark margin m-3" type="submit">Log In</button>
     </form>
+<!--     <div th:insert="fragments/message :: message"></div> -->
 	<div class="alert alert-danger margin mt-3" role="alert" th:text="${error}" th:if="${error}"></div>
 
     <div id="formFooter">
-      <a class="underlineHover" href="register">Register</a>
+      <a class="underlineHover" href="users/register">Register</a>
     </div>
   </div>
 </div>
-	     <script>
-	     $("#submitbutton").click(function() {
-	    	 $("#submitbutton").submit();
-	    	  console.log("form submitted");
-	    	});
-	     </script>
-  </body>
+</body>
 </html>

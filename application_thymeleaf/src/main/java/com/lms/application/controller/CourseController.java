@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lms.application.entity.Course;
+import com.lms.application.entity.ApplicationUser;
 import com.lms.application.service.CourseService;
+import com.lms.application.service.LearningPlanService;
+import com.lms.application.service.UserService;
 
 @Controller
 @RequestMapping("/courses")
@@ -30,6 +33,8 @@ public class CourseController {
 		@RequestMapping(method=RequestMethod.GET)
 		public String showCourses(Model model) {
 			model.addAttribute("course", service.getCourses());
+			//hard coded
+			model.addAttribute("id", 3);
 			return "courses";
 		}	
 		

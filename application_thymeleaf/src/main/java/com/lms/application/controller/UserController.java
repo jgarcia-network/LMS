@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.lms.application.entity.User;
+import com.lms.application.entity.ApplicationUser;
 import com.lms.application.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,14 +33,14 @@ public class UserController {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(Model model) {
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new ApplicationUser());
 		return "register";
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	 //public ResponseEntity<Object> register(@RequestBody Credentials cred){
 	//public ResponseEntity<Object> register(@ModelAttribute("cred") Credentials cred){
-	public String register(RedirectAttributes redirectAttributes, @ModelAttribute("user") User user) {
+	public String register(RedirectAttributes redirectAttributes, @ModelAttribute("user") ApplicationUser user) {
 		try {
 		//return new ResponseEntity<Object>(service.register(cred), HttpStatus.CREATED);
 			service.register(user);

@@ -47,7 +47,7 @@
 <!--   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav ml-auto aria-current">
     <li class="nav-item text-nowrap">
-      <a class="nav-link aria-current" href="#">Admin</a>
+      <a class="text-dark bg-light nav-link" href="#"><span data-feather="star"></span>Admin</a>
     </li>
     <li class="nav-item text-nowrap">
 <!--       <a class="nav-link" href="/perform_logout">Logout</a> -->
@@ -65,7 +65,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
+            <a class="nav-link active" aria-current="page">
               <span data-feather="home"></span>
               Home
             </a>
@@ -142,7 +142,6 @@
         <h1 class="h2">Home</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
           </div>
         </div>
       </div>
@@ -157,6 +156,7 @@
               <th data-field="id" data-sortable="true">Course ID</th>
               <th data-field="title" data-sortable="true">Course Title</th>
               <th data-field="credits" data-sortable="true">Course Credits</th>
+              <th data-field="credits" data-sortable="true">Course Status</th>
               <th data-field="date" data-sortable="true">Date Added</th>
             </tr>
           </thead>
@@ -165,6 +165,7 @@
             <td th:text="${course.id}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.credits}"></td>
+            <td th:text="${course.status}"></td>
             <td th:text="${userPlan.dateAdded}"></td>
             </tr>
           </tbody>
