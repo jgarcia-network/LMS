@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lms.application.util.CourseStatus;
@@ -51,6 +52,7 @@ public class Course {
 		this.credits = credits;
 	}
 	
+	//@OneToMany(mappedBy = "user")
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "learning_plan_courses",
 	joinColumns = @JoinColumn(name = "courseId", referencedColumnName = "id"),
@@ -66,9 +68,9 @@ public class Course {
 	public CourseStatus getStatus() {
 		return status;
 	}
-	
+
 	public void setStatus(CourseStatus status) {
 		this.status = status;
-	}
+	}	
 
 }

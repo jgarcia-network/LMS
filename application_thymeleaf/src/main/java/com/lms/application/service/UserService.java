@@ -27,15 +27,12 @@ public class UserService {
 	
 	private static final Logger logger = LogManager.getLogger(UserService.class);
 	
-//	public User createUser(User user) {
-//			return repo.save(user);
-//	}
-	
 	public ApplicationUser getByUserName(String username) {
 		return repo.findByUsername(username);
 	}
 	
 	public ApplicationUser register(ApplicationUser user) throws AuthenticationException {
+		user.setId(user.getId());
 		user.setEmail(user.getEmail());
 		user.setFirstName(user.getFirstName());
 		user.setLastName(user.getLastName());

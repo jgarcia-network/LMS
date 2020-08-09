@@ -46,8 +46,11 @@
   </button>
 <!--   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav ml-auto aria-current">
+      <li class="nav-item text-nowrap">
+      <a class="nav-link disabled text-white">Welcome <span class="font-weight-bold" th:text="${firstname} + ' ' + ${lastname}"></a>
+    </li>
     <li class="nav-item text-nowrap">
-      <a class="text-dark bg-light nav-link" href="#"><span data-feather="star"></span>Admin</a>
+      <a class="text-dark bg-light nav-link" th:href="@{/admin}"><span data-feather="star"></span>Admin</a>
     </li>
     <li class="nav-item text-nowrap">
 <!--       <a class="nav-link" href="/perform_logout">Logout</a> -->
@@ -73,15 +76,14 @@
           <li class="nav-item">
             <a class="nav-link" href="/courses">
               <span data-feather="list"></span>
-              Courses
+              Catalog
+            </a>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/users/profile}">
+              <span data-feather="user"></span>
+              My Profile
             </a>
           </li>
-<!--           <li class="nav-item"> -->
-<!--             <a class="nav-link" href="#"> -->
-<!--               <span data-feather="shopping-cart"></span> -->
-<!--               Add Course -->
-<!--             </a> -->
-<!--           </li> -->
 <!--           <li class="nav-item"> -->
 <!--             <a class="nav-link" href="#"> -->
 <!--               <span data-feather="users"></span> -->
@@ -150,22 +152,27 @@
 
       <h2>Your Learning Plan</h2>
       <div class="table-responsive">
-        <table data-toggle="table" data-sort-name="id" data-sort-order="asc" id="table" class="table table-sm">
+      <form id="form" th:action="@{/users/plan}" th:object="${course}" method="POST"></form>
+        <table data-toggle="table" data-search="true" data-sort-name="id" data-sort-order="asc" id="table" class="table table-sm">
           <thead class="thead-dark">
             <tr>
+              <th data-sortable="true">Remove From Plan</th>
               <th data-field="id" data-sortable="true">Course ID</th>
               <th data-field="title" data-sortable="true">Course Title</th>
               <th data-field="credits" data-sortable="true">Course Credits</th>
-              <th data-field="credits" data-sortable="true">Course Status</th>
+              <th data-field="status" data-sortable="true">Status</th>
               <th data-field="date" data-sortable="true">Date Added</th>
             </tr>
           </thead>
           <tbody>
             <tr th:each="course : ${userPlan.courses}">
+            <td>
+            <form th:object="${course}" th:action="@{/courses/remove/} + ${{course.id}}" method="post">
+            <button type="submit"><i data-feather="x"></i></button></td>
             <td th:text="${course.id}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.credits}"></td>
-            <td th:text="${course.status}"></td>
+            <td th:text="${userPlan.status}"></td>
             <td th:text="${userPlan.dateAdded}"></td>
             </tr>
           </tbody>

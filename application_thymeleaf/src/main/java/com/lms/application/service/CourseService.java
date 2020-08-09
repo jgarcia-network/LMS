@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lms.application.entity.Course;
 import com.lms.application.repository.CourseRepository;
+import com.lms.application.util.CourseStatus;
 
 @Service
 public class CourseService {

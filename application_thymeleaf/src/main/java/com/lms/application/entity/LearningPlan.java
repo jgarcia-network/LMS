@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lms.application.util.CourseStatus;
 
 @Entity
 public class LearningPlan {
@@ -21,6 +23,7 @@ public class LearningPlan {
 	@JsonIgnore
 	private ApplicationUser user;
 	private Set<Course> courses;
+	private CourseStatus status;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +44,7 @@ public class LearningPlan {
 	}
 	
 	@OneToOne
-	@JoinColumn(name = "userId")
+    @JoinColumn(name = "userId")
 	public ApplicationUser getUser() {
 		return user;
 	}
@@ -50,7 +53,8 @@ public class LearningPlan {
 		this.user = user;
 	}
 	
-	@ManyToMany(mappedBy = "plan")
+	//@OneToMany(mappedBy="plan")
+    @ManyToMany(mappedBy = "plan")
 	public Set<Course> getCourses() {
 		return courses;
 	}
@@ -58,5 +62,13 @@ public class LearningPlan {
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
+
+	public CourseStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CourseStatus status) {
+		this.status = status;
+	}	
 
 }

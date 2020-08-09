@@ -40,55 +40,71 @@ public class LearningPlanService {
 		return lp == null ? new LearningPlan() : lp;
 	}
 
-	public LearningPlan submitNewLearningPlan(Set<Long> courseIds, Long userId) {
-
+	//public LearningPlan submitNewLearningPlan(Set<Long> courseIds, Long userId) {
+	public LearningPlan submitNewLearningPlan(Long userId) {
+		try {
 		ApplicationUser currentUser = userRepo.findById(userId).orElse(null);
 		if (currentUser != null) {
-			LearningPlan currentPlan = createPlan(courseIds, currentUser);
+			//LearningPlan currentPlan = createPlan(courseIds, currentUser);
+			LearningPlan currentPlan = createPlan(currentUser);
 			return currentPlan;
 		}
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to create plan");
+			throw e;
+		}
 		return null;
-
 	}
 
-	private LearningPlan setInProgress(Set<Long> courseIds, ApplicationUser user) {
-		LearningPlan plan = new LearningPlan();
-		Course course = new Course();
+//	private LearningPlan setInProgress(Set<Long> courseIds, ApplicationUser user) {
+//		LearningPlan plan = new LearningPlan();
+//		Course course = new Course();
+//		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
+//		plan.setDateAdded(LocalDate.now());
+//		plan.setUser(user);
+//		course.setStatus(CourseStatus.IN_PROGRESS);
+//		addCourseToPlan(plan);
+//		return plan;
+//	}
+//
+//	private LearningPlan setCompleted(Set<Long> courseIds, ApplicationUser user) {
+//		LearningPlan plan = new LearningPlan();
+//		Course course = new Course();
+//		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
+//		plan.setDateAdded(LocalDate.now());
+//		plan.setUser(user);
+//		course.setStatus(CourseStatus.COMPLETED);
+//		addCourseToPlan(plan);
+//		return plan;
+//	}
+	
+	public LearningPlan setPlanCourses(Set<Long> courseIds, LearningPlan plan) {
+		System.out.println("User plan is " + plan);
+		System.out.println("Found courses are " + courseRepo.findAllById(courseIds));
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
-		plan.setDateAdded(LocalDate.now());
-		plan.setUser(user);
-		course.setStatus(CourseStatus.IN_PROGRESS);
+		plan.setStatus(CourseStatus.IN_PROGRESS);
 		addCourseToPlan(plan);
+		repo.save(plan);
 		return plan;
 	}
 
-	private LearningPlan setCompleted(Set<Long> courseIds, ApplicationUser user) {
-		LearningPlan plan = new LearningPlan();
-		Course course = new Course();
-		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
-		plan.setDateAdded(LocalDate.now());
-		plan.setUser(user);
-		course.setStatus(CourseStatus.COMPLETED);
-		addCourseToPlan(plan);
-		return plan;
-	}
-
-	private void addCourseToPlan(LearningPlan plan) {
+	public void addCourseToPlan(LearningPlan plan) {
 		Set<Course> courses = plan.getCourses();
 		for (Course course : courses) {
 			course.getPlan().add(plan);
 		}
 	}
 
-	private LearningPlan createPlan(Set<Long> courseIds, ApplicationUser user) {
+	//private LearningPlan createPlan(Set<Long> courseIds, ApplicationUser user) {
+	private LearningPlan createPlan(ApplicationUser user) {
 		LearningPlan plan = new LearningPlan();
-		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
+		plan.setCourses(null);
 		plan.setDateAdded(LocalDate.now());
 		plan.setUser(user);
-		Set<Course> courses = plan.getCourses();
-		for (Course course : courses) {
-			course.getPlan().add(plan);
-		}
+//		Set<Course> courses = plan.getCourses();
+//		for (Course course : courses) {
+//			course.getPlan().add(plan);
+//		}
 		plan = repo.save(plan);
 		return plan;
 	}
