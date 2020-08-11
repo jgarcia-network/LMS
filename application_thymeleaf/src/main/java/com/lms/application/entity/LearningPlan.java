@@ -69,6 +69,6 @@ public class LearningPlan {
 
 	public void setStatus(CourseStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

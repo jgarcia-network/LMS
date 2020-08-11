@@ -12,7 +12,7 @@
     
 
     <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
 
 
     <style>
@@ -47,7 +47,7 @@
 <!--   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
   <ul class="navbar-nav ml-auto aria-current">
       <li class="nav-item text-nowrap">
-      <a class="nav-link disabled text-white">Welcome <span class="font-weight-bold" th:text="${firstname} + ' ' + ${lastname}"></a>
+      <a class="nav-link disabled text-white">Welcome <span class="font-weight-bold" th:text="${firstname} + ' ' + ${lastname}"></span></a>
     </li>
     <li class="nav-item text-nowrap">
       <a class="text-dark bg-light nav-link" th:href="@{/admin}"><span data-feather="star"></span>Admin</a>
@@ -56,7 +56,7 @@
 <!--       <a class="nav-link" href="/perform_logout">Logout</a> -->
 <a class="nav-link" href="javascript: document.buttonlogout.submit()">Logout</a>
    <form name="buttonlogout" th:action="@{/logout}" method="post" th:hidden="true">
-      <button hidden type="submit"/></button>
+      <button hidden="hidden" type="submit"/></button>
    </form>
     </li>
   </ul>
@@ -152,11 +152,10 @@
 
       <h2>Your Learning Plan</h2>
       <div class="table-responsive">
-      <form id="form" th:action="@{/users/plan}" th:object="${course}" method="POST"></form>
         <table data-toggle="table" data-search="true" data-sort-name="id" data-sort-order="asc" id="table" class="table table-sm">
           <thead class="thead-dark">
             <tr>
-              <th data-sortable="true">Remove From Plan</th>
+              <th data-field="remove">Remove From Plan</th>
               <th data-field="id" data-sortable="true">Course ID</th>
               <th data-field="title" data-sortable="true">Course Title</th>
               <th data-field="credits" data-sortable="true">Course Credits</th>
@@ -167,16 +166,23 @@
           <tbody>
             <tr th:each="course : ${userPlan.courses}">
             <td>
-            <form th:object="${course}" th:action="@{/courses/remove/} + ${{course.id}}" method="post">
-            <button type="submit"><i data-feather="x"></i></button></td>
+            <form th:object="${course}" th:action="@{/users/plan/delete/} + ${{course.id}}" method="post">
+            <button type="submit">
+            <i data-feather="x"></i>
+            <input type="hidden" th:field="${course}"/>
+            </button>
             <td th:text="${course.id}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.credits}"></td>
             <td th:text="${userPlan.status}"></td>
             <td th:text="${userPlan.dateAdded}"></td>
+			</form>
+			</td>
             </tr>
           </tbody>
         </table>
+        <div class="alert alert-danger margin mt-3" role="alert" th:text="${error}" th:if="${error}"></div>
+        <div class="alert alert-secondary margin mt-3" role="alert" th:text="${success}" th:if="${success}"></div>
       </div>
     </main>
   </div>

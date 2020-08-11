@@ -17,8 +17,8 @@ public class CourseService {
 	@Autowired
 	private CourseRepository repo;
 	
-	public Optional <Course> getCourses(Long id){
-		return repo.findById(id);
+	public  Course getCourses(Long id){
+		return repo.findCourseById(id);
 	}
 	
 	public Iterable <Course> getCourses(){
@@ -44,12 +44,12 @@ public class CourseService {
 		}
 	}
 	
-	public void deleteCourse(Long id) throws Exception {
+	public void deleteCourse(Long courseId) throws Exception {
 		try {
-			repo.deleteById(id);
+			repo.deleteById(courseId);
 		} catch (Exception e) {
-			logger.error("Exception occurred while trying to delete course: " + id, e);
-			throw new Exception("Unable to delete course.");
+			logger.error("Exception occurred while trying to delete product: " + courseId, e);
+			throw new Exception("Unable to delete product.");
 		}
 	}
 	

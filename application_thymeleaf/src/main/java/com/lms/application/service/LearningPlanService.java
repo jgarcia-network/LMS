@@ -1,7 +1,9 @@
 package com.lms.application.service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -79,8 +81,8 @@ public class LearningPlanService {
 //	}
 	
 	public LearningPlan setPlanCourses(Set<Long> courseIds, LearningPlan plan) {
-		System.out.println("User plan is " + plan);
-		System.out.println("Found courses are " + courseRepo.findAllById(courseIds));
+		//System.out.println("User plan is " + plan);
+		//System.out.println("Found courses are " + courseRepo.findAllById(courseIds));
 		plan.setCourses(convertToCourseSet(courseRepo.findAllById(courseIds)));
 		plan.setStatus(CourseStatus.IN_PROGRESS);
 		addCourseToPlan(plan);
@@ -114,8 +116,35 @@ public class LearningPlanService {
 		for (Course course : iterable) {
 			set.add(course);
 		}
-		return set;
-		
+		return set;		
+	}
+
+	
+	public LearningPlan removeCourse(LearningPlan plan, Course course) throws Exception {
+		//Set<Course> set = new HashSet<Course>();
+		try {
+		//	for (Course course : set) {
+			//	if (course.getId() == courseId) {
+			//	course.getPlan().remove(plan);
+			//	plan.getCourses().remove(course);
+			//	set.remove(course);
+			//	}
+			//}
+			//plan.getCourses().remove(course);
+			System.out.println("Plan is " + plan.getId());
+			System.out.println("Course is "+ course.getId());
+			
+			System.out.println(Arrays.toString(course.getPlan().toArray()));
+			course.getPlan().remove(plan);			
+			repo.save(plan);
+			
+		} catch (Exception e) {
+			logger.error("Exception occurred while trying to delete course: ");
+			System.out.println(e.getStackTrace());
+			System.out.println();
+			throw new Exception("Unable to delete product.");
+		}
+		return plan;
 	}
 
 }

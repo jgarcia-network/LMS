@@ -4,18 +4,21 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lms.application.util.CourseStatus;
 
 @Entity
+@NamedQuery(name = "Course.removeCourse", query = "DELETE FROM Course t WHERE c = :id AND p = :plan")
 public class Course {
 	
 	private Long id;
@@ -53,10 +56,11 @@ public class Course {
 	}
 	
 	//@OneToMany(mappedBy = "user")
-	@ManyToMany(cascade = CascadeType.ALL)
+	//@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "learning_plan_courses",
 	joinColumns = @JoinColumn(name = "courseId", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "planId", referencedColumnName = "id"))
+	inverseJoinColumns = @JoinColumn(name = "planId", referencedColumnName = "id"))	
 	public Set<LearningPlan> getPlan() {
 		return plan;
 	}
@@ -71,6 +75,6 @@ public class Course {
 
 	public void setStatus(CourseStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

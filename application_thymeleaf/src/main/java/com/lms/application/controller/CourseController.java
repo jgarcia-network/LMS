@@ -38,7 +38,7 @@ public class CourseController {
 		private UserService userService;
 		
 		@Autowired
-		private LearningPlanService LPservice;
+		private LearningPlanService LPService;
 		
 //		@RequestMapping(method=RequestMethod.GET)
 //		public ResponseEntity<Object> getCourses(){
@@ -50,7 +50,7 @@ public class CourseController {
 			model.addAttribute("course", service.getCourses());
 			UserDetails userdetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			ApplicationUser user = userService.getByUserName(userdetails.getUsername());
-			LearningPlan userPlan = LPservice.getUserPlan(user.getId());
+			LearningPlan userPlan = LPService.getUserPlan(user.getId());
 			return "courses";
 		}	
 		
@@ -78,28 +78,27 @@ public class CourseController {
 			}		
 		}
 		
-		@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-		public ResponseEntity<Object> deleteCourse(@PathVariable Long id){
-			try {
-				service.deleteCourse(id);
-				return new ResponseEntity<Object>("Successfully deleted course with id: " + id, HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<Object>("Unable to update course.", HttpStatus.BAD_REQUEST);
-			}		
-		}
+//		@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+//		public ResponseEntity<Object> deleteCourse(@PathVariable Long id){
+//			try {
+//				service.deleteCourse(id);
+//				return new ResponseEntity<Object>("Successfully deleted course with id: " + id, HttpStatus.OK);
+//			} catch (Exception e) {
+//				return new ResponseEntity<Object>("Unable to update course.", HttpStatus.BAD_REQUEST);
+//			}		
+//		}
 		
 		@RequestMapping(value="/add/{id}", method=RequestMethod.POST)
 		public String addCourseToPlan(@PathVariable Long id, @ModelAttribute("course") Course course, RedirectAttributes redirectAttributes, Model model) {
 			UserDetails userdetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			ApplicationUser user = userService.getByUserName(userdetails.getUsername());
-			LearningPlan userPlan = LPservice.getUserPlan(user.getId());
+			LearningPlan userPlan = LPService.getUserPlan(user.getId());
 			
-			System.out.println("Course Title " + course.getTitle());
-			System.out.println("Course ID " + course.getId());
-			System.out.println("Course Credits " + course.getCredits());
-			System.out.println("User Plan is " + userPlan);
-			
-			System.out.println("This is the userplan " + user.getPlan().getId());
+//			System.out.println("Course Title " + course.getTitle());
+//			System.out.println("Course ID " + course.getId());
+//			System.out.println("Course Credits " + course.getCredits());
+//			System.out.println("User Plan is " + userPlan);			
+//			System.out.println("This is the userplan " + user.getPlan().getId());
 			
 			boolean flag = false;
 			
@@ -114,17 +113,30 @@ public class CourseController {
 			if (flag != true) {
 				Set<Long> courseId = new HashSet<Long>();
 				courseId.add(id);
-				LPservice.setPlanCourses(courseId, userPlan);
-				redirectAttributes.addFlashAttribute("error", "Course added to your plan");
+				LPService.setPlanCourses(courseId, userPlan);
+				redirectAttributes.addFlashAttribute("success", "Course added to your plan");
 				return "redirect:/courses";
 			} else {
-				redirectAttributes.addFlashAttribute("error", "Course exists in your plan");
+				redirectAttributes.addFlashAttribute("error", "Course already exists in your plan");
 				return "redirect:/courses";
 			}
-
-			//return "courses";
-			//return "redirect:/courses";
 		}
+		
+//		@RequestMapping(value="delete/{id}", method=RequestMethod.POST)
+//		public String deletePlanCourse(@PathVariable Long id, @ModelAttribute("course") Course course, RedirectAttributes redirectAttributes){
+//			System.out.println("ID is " + id);
+//			try {
+//				UserDetails userdetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//				ApplicationUser user = userService.getByUserName(userdetails.getUsername());
+//				LearningPlan userPlan = LPservice.getUserPlan(user.getId());
+//				LPservice.deletePlanCourse(id, userPlan);
+//				redirectAttributes.addFlashAttribute("success", "Course deleted from your plan");
+//				return "redirect:/learningplan";
+//			} catch (Exception e) {
+//				redirectAttributes.addFlashAttribute("error", "Course could not be removed");
+//				return "redirect:/learningplan";
+//			}		
+//		}
 		
 //		@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 //		public ResponseEntity<Object> updatePlan(@PathVariable Long id, @RequestBody Course course, @PathVariable User user){
