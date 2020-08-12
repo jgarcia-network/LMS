@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content=""/>
+<meta name="description" content="" />
 <meta name="author"
-	content="Mark Otto, Jacob Thornton, and Bootstrap contributors"/>
-<meta name="generator" content="Hugo 0.72.0"/>
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+<meta name="generator" content="Hugo 0.72.0" />
 <title>LMS</title>
 
 <link rel="canonical"
-	href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/"/>
+	href="https://v5.getbootstrap.com/docs/5.0/examples/dashboard/" />
 
 
 <!-- Bootstrap core CSS -->
@@ -39,7 +39,7 @@
 
 
 <!-- Custom styles for this template -->
-<link rel="stylesheet" th:href="@{/css/style.css}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 
@@ -53,9 +53,7 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<!--   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
 		<ul class="navbar-nav ml-auto aria-current">
-<!-- 			<li class="nav-item text-nowrap"><a class="text-dark bg-light nav-link aria-current" href="#"><span data-feather="star"></span>Admin</a></li> -->
 			<li class="nav-item text-nowrap"><a
 				class="nav-link aria-current" th:href="@{/logout}">Logout</a></li>
 		</ul>
@@ -70,52 +68,7 @@
 						<li class="nav-item"><a class="nav-link" aria-current="page"
 							th:href="@{/users/plan}"> <span data-feather="home"></span>Home
 						</a></li>
-						<!--           <li class="nav-item"> -->
-						<!--             <a class="nav-link" href="#"> -->
-						<!--               <span data-feather="bar-chart-2"></span> -->
-						<!--               Reports -->
-						<!--             </a> -->
-						<!--           </li> -->
-						<!--           <li class="nav-item"> -->
-						<!--             <a class="nav-link" href="#"> -->
-						<!--               <span data-feather="layers"></span> -->
-						<!--               Integrations -->
-						<!--             </a> -->
-						<!--           </li> -->
 					</ul>
-
-					<!--         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"> -->
-					<!--           <span>Saved reports</span> -->
-					<!--           <a class="link-secondary" href="#" aria-label="Add a new report"> -->
-					<!--             <span data-feather="plus-circle"></span> -->
-					<!--           </a> -->
-					<!--         </h6> -->
-					<!--         <ul class="nav flex-column mb-2"> -->
-					<!--           <li class="nav-item"> -->
-					<!--             <a class="nav-link" href="#"> -->
-					<!--               <span data-feather="file-text"></span> -->
-					<!--               Current month -->
-					<!--             </a> -->
-					<!--           </li> -->
-					<!--           <li class="nav-item"> -->
-					<!--             <a class="nav-link" href="#"> -->
-					<!--               <span data-feather="file-text"></span> -->
-					<!--               Last quarter -->
-					<!--             </a> -->
-					<!--           </li> -->
-					<!--           <li class="nav-item"> -->
-					<!--             <a class="nav-link" href="#"> -->
-					<!--               <span data-feather="file-text"></span> -->
-					<!--               Social engagement -->
-					<!--             </a> -->
-					<!--           </li> -->
-					<!--           <li class="nav-item"> -->
-					<!--             <a class="nav-link" href="#"> -->
-					<!--               <span data-feather="file-text"></span> -->
-					<!--               Year-end sale -->
-					<!--             </a> -->
-					<!--           </li> -->
-					<!--         </ul> -->
 				</div>
 			</nav>
 
@@ -128,14 +81,11 @@
 					</div>
 				</div>
 
-				<!--       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-
-				<!-- 				<h4>Add Course</h4> -->
 				<div>
 					<table class="table table-sm">
 						<thead class="thead-dark">
 							<tr>
-								<th></th>
+								<th class="text-center"></th>
 								<th scope="col">ID</th>
 								<th scope="col">First Name</th>
 								<th scope="col">Last Name</th>
@@ -144,7 +94,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td class="text-center"><img src="https://img.icons8.com/material-two-tone/24/000000/user-shield.png"/></td>
+								<td class="text-center"><img src="https://img.icons8.com/color/25/000000/venom-head.png"/></td>
 								<td th:text="${id}"></td>
 								<td th:text="${firstName}"></td>
 								<td th:text="${lastName}"></td>
@@ -166,7 +116,9 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
 		integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
 		crossorigin="anonymous"></script>
-	  <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-	  <script>feather.replace();</script>
+	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+	<script>
+		feather.replace();
+	</script>
 </body>
 </html>

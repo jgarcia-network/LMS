@@ -23,26 +23,21 @@ import org.apache.logging.log4j.Logger;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-	
+
 	private static final Logger logger = LogManager.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	private LearningPlanService LPservice;
-	
-//	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
-//	public ResponseEntity<Object> createCustomer(@RequestBody User user) {
-//		return new ResponseEntity<Object>(service.createUser(user), HttpStatus.CREATED);
-//	}
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(Model model) {
 		model.addAttribute("user", new ApplicationUser());
 		return "register";
 	}
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(RedirectAttributes redirectAttributes, @ModelAttribute("user") ApplicationUser user) {
 		try {
@@ -55,25 +50,7 @@ public class UserController {
 			return "register";
 		}
 	}
-	
-//	@RequestMapping(value = "/login", method = RequestMethod.GET)
-//	public String login(Model model) {
-//		model.addAttribute("cred", new Credentials());
-//		return "Login";
-//	}
-//	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//	public String login(RedirectAttributes redirectAttributes, @ModelAttribute("cred") Credentials cred) {
-//		try {
-//			service.login(cred);
-//			redirectAttributes.addAttribute("userId", cred.getUserId());
-//			return "redirect:/users/{userId}/plan";
-//		} catch (AuthenticationException e) {
-//			redirectAttributes.addFlashAttribute("error", "Incorrect username or password");
-//			return "redirect:/users/login";
-//		}
-//	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
 		try {
@@ -83,10 +60,10 @@ public class UserController {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile(Model model) {
-		UserDetails userdetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userdetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ApplicationUser user = service.getByUserName(userdetails.getUsername());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
@@ -94,5 +71,5 @@ public class UserController {
 		model.addAttribute("id", user.getId());
 		return "profile";
 	}
-	
+
 }

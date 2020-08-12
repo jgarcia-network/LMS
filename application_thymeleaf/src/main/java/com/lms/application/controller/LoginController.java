@@ -30,16 +30,4 @@ public class LoginController {
 		return "redirect:/login";
 	}
 	
-//	@RequestMapping(method = RequestMethod.POST)
-//	public String login(RedirectAttributes redirectAttributes, @ModelAttribute("cred") Credentials cred) {
-//		try {
-//			service.login(cred);
-//			redirectAttributes.addAttribute("userId", cred.getUserId());
-//			return "redirect:/users/{userId}/plan";
-//		} catch (AuthenticationException e) {
-//			redirectAttributes.addFlashAttribute("error", "Incorrect username or password");
-//			return "redirect:/login";
-//		}
-//	}
-	
 }

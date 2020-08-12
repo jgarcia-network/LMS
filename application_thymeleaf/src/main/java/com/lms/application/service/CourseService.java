@@ -1,13 +1,15 @@
 package com.lms.application.service;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lms.application.entity.Course;
+import com.lms.application.entity.LearningPlan;
 import com.lms.application.repository.CourseRepository;
-import com.lms.application.util.CourseStatus;
 
 @Service
 public class CourseService {
@@ -21,7 +23,7 @@ public class CourseService {
 		return repo.findCourseById(id);
 	}
 	
-	public Iterable <Course> getCourses(){
+	public Iterable<Course> getCourses(){
 		return repo.findAll();
 	}
 	
